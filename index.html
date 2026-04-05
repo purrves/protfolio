@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Portfolio - IT Developer</title>
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#0f172a;
+    color:white;
+    scroll-behavior:smooth;
+}
+nav{
+    display:flex;
+    justify-content:space-between;
+    padding:15px 40px;
+    background:rgba(0,0,0,0.5);
+    position:fixed;
+    width:100%;
+    backdrop-filter:blur(10px);
+    z-index:100;
+}
+nav h2{color:#3b82f6;}
+nav a{
+    color:white;
+    margin:0 10px;
+    text-decoration:none;
+    font-weight:500;
+}
+nav a:hover{color:#9333ea;}
+.hero{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    background:linear-gradient(135deg,#3b82f6,#9333ea);
+    position:relative;
+    overflow:hidden;
+}
+.hero-floating{
+    background:rgba(0,0,0,0.5);
+    padding:50px;
+    border-radius:20px;
+    backdrop-filter:blur(10px);
+    max-width:700px;
+    box-shadow:0 0 20px rgba(255,255,255,0.2);
+}
+.hero-floating h1{
+    font-size:3rem;
+    font-weight:900;
+    margin-bottom:20px;
+}
+.hero-floating p{
+    font-size:1.2rem;
+    line-height:1.6;
+    font-weight:600;
+    margin-bottom:30px;
+}
+.hero::before, .hero::after{
+    content:'';
+    position:absolute;
+    border-radius:50%;
+    background:rgba(255,255,255,0.1);
+    animation:float 6s infinite;
+}
+.hero::before{width:300px;height:300px;top:10%;left:10%;}
+.hero::after{width:200px;height:200px;bottom:10%;right:10%;}
+@keyframes float{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-30px);}
+    100%{transform:translateY(0);}
+}
+.fade-in{
+    opacity:0;
+    transform:translateY(30px);
+    transition:all 0.8s ease-out;
+}
+.fade-in.visible{
+    opacity:1;
+    transform:translateY(0);
+}
+section{
+    padding:80px 20px;
+    text-align:center;
+}
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:50px;
+    justify-items:center;
+}
+.card{
+    background:#1e293b;
+    padding:20px;
+    border-radius:10px;
+    transition:0.3s;
+    cursor:pointer;
+    text-align:left;
+    width:100%;
+    max-width:500px;
+}
+.card:hover{
+    transform:translateY(-10px);
+    background:#334155;
+    box-shadow:0 0 20px #3b82f6;
+}
+.card h3{
+    margin-bottom:10px;
+    color:#3b82f6;
+}
+.card p{
+    font-size:0.95rem;
+    color:#cbd5e1;
+}
+
+/* Updated Courses / Why Choose info to be bigger and bold */
+#skills .card p,
+.why-columns .card p{
+    font-size:1.1rem;
+    font-weight:700;
+    color:#cbd5e1;
+}
+
+button{
+    padding:10px 20px;
+    border:none;
+    background:#3b82f6;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+    transition:0.3s;
+}
+button:hover{
+    box-shadow:0 0 15px #3b82f6;
+    transform:translateY(-3px);
+}
+input,textarea,select{
+    width:80%;
+    padding:10px;
+    margin:10px;
+    border:none;
+    border-radius:5px;
+    background:#1e293b;
+    color:white;
+}
+select:hover{
+    background:#3b82f6;
+}
+footer{
+    background:#020617;
+    padding:20px;
+}
+h2{margin-bottom:40px; font-size:2.5rem; color:#3b82f6;}
+.achievement-number{
+    font-size:2rem;
+    font-weight:bold;
+    color:#9333ea;
+}
+#skills .card{
+    min-height:180px;
+    transition:all 0.3s ease;
+}
+#skills .card:hover{
+    box-shadow:0 0 25px #3b82f6;
+}
+#projects .card{
+    min-height:150px;
+}
+/* Why choose me 2 columns */
+.why-columns{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px 50px;
+    justify-items:start;
+    text-align:left;
+}
+.why-columns .card{max-width:none;}
+
+/* Modal styles */
+.modal{
+    display:none;
+    position:fixed;
+    top:0; left:0; right:0; bottom:0;
+    background:rgba(0,0,0,0.7);
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+.modal-content{
+    background:#1e293b;
+    padding:30px;
+    border-radius:10px;
+    text-align:center;
+    max-width:400px;
+    width:90%;
+}
+.modal-content input{
+    width:90%;
+}
+.close{
+    position:absolute;
+    top:15px;
+    right:20px;
+    font-size:1.5rem;
+    cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<nav>
+    <h2>My Portfolio</h2>
+    <div>
+        <a href="#about">About</a>
+        <a href="#skills">Courses</a>
+        <a href="#projects">Projects</a>
+        <a href="#why">Why Me</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#contact">Contact</a>
+    </div>
+</nav>
+
+<div class="hero">
+    <div class="hero-floating fade-in" id="heroContent">
+        <h1>IT Developer & Full Stack Enthusiast 🚀</h1>
+        <p><strong>Building Modern Websites, Applications & Solving Problems with Clean & Efficient Code.</strong></p>
+        <button onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">Explore</button>
+        <div style="margin-top:20px;">
+            <button onclick="openModal('signupModal')">Sign Up</button>
+            <button onclick="openModal('loginModal')">Login</button>
+        </div>
+    </div>
+</div>
+
+<!-- Sign Up Modal -->
+<div class="modal" id="signupModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('signupModal')">&times;</span>
+        <h3>Sign Up</h3>
+        <input type="text" id="signupName" placeholder="Name" required><br>
+        <input type="email" id="signupEmail" placeholder="Email" required><br>
+        <input type="password" id="signupPass" placeholder="Password" required><br>
+        <button onclick="signup()">Sign Up</button>
+    </div>
+</div>
+
+<!-- Login Modal -->
+<div class="modal" id="loginModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('loginModal')">&times;</span>
+        <h3>Login</h3>
+        <input type="email" id="loginEmail" placeholder="Email" required><br>
+        <input type="password" id="loginPass" placeholder="Password" required><br>
+        <button onclick="login()">Login</button>
+    </div>
+</div>
+
+<section id="about">
+    <h2>About Me</h2>
+    <p class="fade-in">
+        I am an IT Developer with experience in building responsive websites, learning modern programming languages, and creating efficient software solutions. Passionate about coding, learning, and solving complex problems. My portfolio showcases my work in C, C++, HTML, Java, Python, SQL, JavaScript, and PHP projects.
+    </p>
+</section>
+
+<section id="skills">
+    <h2>Courses / Skills</h2>
+    <div class="grid">
+        <div class="card fade-in">
+            <h3>C Programming</h3>
+            <p>Learn the fundamentals of programming, problem-solving, and logic using C language.</p>
+        </div>
+        <div class="card fade-in">
+            <h3>C++ Programming</h3>
+            <p>Master object-oriented programming, data structures, and algorithms with C++.</p>
+        </div>
+        <div class="card fade-in">
+            <h3>HTML & CSS</h3>
+            <p>Build responsive, modern websites with HTML5, CSS3, and best practices.</p>
+        </div>
+        <div class="card fade-in">
+            <h3>Java</h3>
+            <p>Develop robust applications, understanding OOP, multithreading, and GUI basics.</p>
+        </div>
+        <div class="card fade-in">
+            <h3>Python</h3>
+            <p>Learn scripting, automation, and data handling with Python programming.</p>
+        </div>
+        <div class="card fade-in">
+            <h3>JavaScript</h3>
+            <p>Front-end scripting language for interactive websites and dynamic effects.</p>
+        </div>
+        <div class="card fade-in">
+            <h3>SQL</h3>
+            <p>Manage and query databases efficiently with SQL commands and optimization.</p>
+        </div>
+        <div class="card fade-in">
+            <h3>PHP</h3>
+            <p>Server-side programming for web applications, APIs, and dynamic websites.</p>
+        </div>
+    </div>
+</section>
+
+<section id="projects">
+    <h2>Projects</h2>
+    <div class="grid">
+        <div class="card fade-in">Portfolio Website</div>
+        <div class="card fade-in">Calculator App</div>
+        <div class="card fade-in">Login System</div>
+        <div class="card fade-in">E-commerce Site</div>
+    </div>
+</section>
+
+<section id="why">
+    <h2>Why Choose Me</h2>
+    <div class="why-columns">
+        <div class="card fade-in">
+            <h3>Fast Work</h3>
+            <p>Delivering projects on time with efficient solutions and optimized code.</p>
+        </div>
+        <div class="card fade-in">
+            <h3>Clean Code</h3>
+            <p>Readable, maintainable, and well-documented code for scalability.</p>
+        </div>
+        <div class="card fade-in">
+            <h3>Creative Design</h3>
+            <p>Modern UI/UX designs that enhance user experience and engagement.</p>
+        </div>
+        <div class="card fade-in">
+            <h3>Problem Solver</h3>
+            <p>Ability to analyze, debug, and solve complex technical challenges.</p>
+        </div>
+        <div class="card fade-in">
+            <h3>Reliable Support</h3>
+            <p>Available for guidance, maintenance, and troubleshooting tasks.</p>
+        </div>
+        <div class="card fade-in">
+            <h3>Continuous Learning</h3>
+            <p>Keeping up-to-date with latest technologies to deliver modern solutions.</p>
+        </div>
+    </div>
+</section>
+
+<section id="achievements">
+    <h2>Our Achievements</h2>
+    <div class="grid">
+        <div class="card fade-in"><div class="achievement-number" data-target="100">0</div><p>Projects Completed</p></div>
+        <div class="card fade-in"><div class="achievement-number" data-target="50">0</div><p>Happy Clients</p></div>
+        <div class="card fade-in"><div class="achievement-number" data-target="10">0</div><p>Years Experience</p></div>
+        <div class="card fade-in"><div class="achievement-number" data-target="5">0</div><p>Awards Won</p></div>
+    </div>
+</section>
+
+<section id="contact">
+    <h2>Contact Me</h2>
+    <form onsubmit="sendMsg(event)">
+        <input type="text" placeholder="Name" required><br>
+        <input type="email" placeholder="Email" required><br>
+        <select required>
+            <option value="">Choose Course</option>
+            <option value="c">C Programming</option>
+            <option value="cpp">C++ Programming</option>
+            <option value="html">HTML & CSS</option>
+            <option value="java">Java</option>
+            <option value="python">Python</option>
+            <option value="js">JavaScript</option>
+            <option value="sql">SQL</option>
+            <option value="php">PHP</option>
+        </select><br>
+        <textarea placeholder="Message"></textarea><br>
+        <button type="submit">Send</button>
+    </form>
+</section>
+
+<footer>
+    <p>© 2026 My Portfolio</p>
+</footer>
+
+<script>
+// Fade-in on scroll
+const faders = document.querySelectorAll('.fade-in');
+const appearOptions = {threshold:0.2};
+const appearOnScroll = new IntersectionObserver(function(entries, observer){
+    entries.forEach(entry=>{
+        if(!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+    });
+}, appearOptions);
+faders.forEach(fader => appearOnScroll.observe(fader));
+
+// Send Message
+function sendMsg(e){
+    e.preventDefault();
+    alert("Message Sent Successfully ✅");
+}
+
+// Achievement counter animation
+const counters = document.querySelectorAll('.achievement-number');
+const speed = 200;
+const countObserver = new IntersectionObserver((entries, observer)=>{
+    entries.forEach(entry=>{
+        if(entry.isIntersecting){
+            const updateCount = counter =>{
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = Math.ceil(target / speed);
+                if(count < target){
+                    counter.innerText = count + increment;
+                    setTimeout(()=>updateCount(counter),20);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCount(entry.target);
+            observer.unobserve(entry.target);
+        }
+    });
+},{threshold:0.6});
+counters.forEach(counter => countObserver.observe(counter));
+
+// Modal Functions
+function openModal(id){document.getElementById(id).style.display='flex';}
+function closeModal(id){document.getElementById(id).style.display='none';}
+
+// Sign Up
+function signup(){
+    const name=document.getElementById('signupName').value;
+    const email=document.getElementById('signupEmail').value;
+    const pass=document.getElementById('signupPass').value;
+    if(!name || !email || !pass){alert("All fields required"); return;}
+    let users=JSON.parse(localStorage.getItem('users')||'{}');
+    if(users[email]){alert("User already exists ❌"); return;}
+    users[email]={name,pass};
+    localStorage.setItem('users',JSON.stringify(users));
+    alert("Sign Up Successful ✅");
+    closeModal('signupModal');
+}
+
+// Login
+function login(){
+    const email=document.getElementById('loginEmail').value;
+    const pass=document.getElementById('loginPass').value;
+    const users=JSON.parse(localStorage.getItem('users')||'{}');
+    if(!users[email] || users[email].pass!==pass){
+        alert("Invalid Email or Password ❌");
+        return;
+    }
+    closeModal('loginModal');
+    const hero = document.getElementById('heroContent');
+    hero.innerHTML = `<h1>Welcome, ${users[email].name}! 🎉</h1>
+                      <p>Explore courses, projects, and achievements below.</p>
+                      <button onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">Explore</button>`;
+}
+</script>
+
+</body>
+</html>
